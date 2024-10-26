@@ -7,10 +7,11 @@ class FVoiceRunnable : public FRunnable
 {
 public:
     FString TextToSpeak;
+    FString FileName;
     UBasicVoice* VoiceInstance;
 
-    FVoiceRunnable(UBasicVoice* InVoiceInstance, const FString& InText)
-        : VoiceInstance(InVoiceInstance), TextToSpeak(InText)
+    FVoiceRunnable(UBasicVoice* InVoiceInstance, const FString& InText, const FString& FileName)
+        : VoiceInstance(InVoiceInstance), TextToSpeak(InText), FileName(FileName)
     {
     }
 
@@ -18,7 +19,7 @@ public:
     {
         if (VoiceInstance)
         {
-            VoiceInstance->SpeakInThread(TextToSpeak);
+            VoiceInstance->SpeakInThread(TextToSpeak, FileName);
         }
         return 0;
     }
@@ -33,14 +34,14 @@ UBasicVoice::UBasicVoice()
     pVoice = nullptr;
 }
 
-void UBasicVoice::SetSpeech(const FString& Text)
+void UBasicVoice::SetSpeech(const FString& Text, const FString& FileName)
 {
-    FVoiceRunnable* VoiceRunnable = new FVoiceRunnable(this, Text);
+    FVoiceRunnable* VoiceRunnable = new FVoiceRunnable(this, Text, FileName);
     FRunnableThread* Thread = FRunnableThread::Create(VoiceRunnable, TEXT("VoiceRunnableThread"));
 }
 
 // Separate function to handle speech synthesis in the thread
-void UBasicVoice::SpeakInThread(const FString& Text)
+void UBasicVoice::SpeakInThread(const FString& Text, const FString& FileName)
 {
     // Initialize COM in this thread
     HRESULT hr_ = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
@@ -65,7 +66,7 @@ void UBasicVoice::SpeakInThread(const FString& Text)
     CSpStreamFormat wavFormat;
     wavFormat.AssignFormat(SPSF_22kHz16BitMono);  // Example format
 
-    FString FilePath = FPaths::ProjectSavedDir() + TEXT("GeneratedAudio/") + TEXT("VoiceOutput.wav");  // Save location
+    FString FilePath = FPaths::ProjectSavedDir() + TEXT("GeneratedAudio/") + (FileName) + TEXT(".wav");  // Save location
     hr_ = SPBindToFile(*FilePath, SPFM_CREATE_ALWAYS, &spStream, &wavFormat.FormatId(), wavFormat.WaveFormatExPtr());
 
     if (FAILED(hr_))

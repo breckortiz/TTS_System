@@ -20,7 +20,7 @@ public:
 
     // Function to speak the given text
     UFUNCTION(BlueprintCallable, Category = "TTS")
-    void SpeakText(const FString& Text);
+    void SpeakText(const FString& Text, const FString& FileName);
 
 protected:
     virtual void BeginPlay() override; // Override BeginPlay

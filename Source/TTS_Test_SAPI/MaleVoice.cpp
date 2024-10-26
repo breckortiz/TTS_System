@@ -6,9 +6,9 @@ AMaleVoice::AMaleVoice()
     BasicVoiceComponent = CreateDefaultSubobject<UBasicVoice>(TEXT("BasicVoiceComponent"));
 }
 
-void AMaleVoice::SetSpeech(const FString& Text)
+void AMaleVoice::SetSpeech(const FString& Text, const FString& FileName)
 {
-    BasicVoiceComponent->SetSpeech(Text); // Call SetSpeech on the BasicVoice component
+    BasicVoiceComponent->SetSpeech(Text, FileName); // Call SetSpeech on the BasicVoice component
 }
 
 void AMaleVoice::OutSpeech()

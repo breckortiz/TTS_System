@@ -20,8 +20,8 @@ protected:
 public:
     UBasicVoice();
     void initVoice();
-    virtual void SetSpeech(const FString& Text);
-    void SpeakInThread(const FString& Text);
+    virtual void SetSpeech(const FString& Text, const FString& FileName);
+    void SpeakInThread(const FString& Text, const FString& FileName);
     virtual void OutSpeech();
     virtual void ByeSpeech();
     virtual ~UBasicVoice();

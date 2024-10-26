@@ -16,7 +16,7 @@ public:
     AMaleVoice(); // Constructor to initialize BasicVoiceComponent
 
     UFUNCTION(BlueprintCallable, Category = "TTS")
-    void SetSpeech(const FString& Text); // Update the signature
+    void SetSpeech(const FString& Text, const FString& FileName); // Update the signature
 
     UFUNCTION(BlueprintCallable, Category = "TTS")
     void OutSpeech();

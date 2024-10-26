@@ -26,11 +26,11 @@ void AVoiceCaller::BeginPlay()
 }
 
 // Function to speak the provided text
-void AVoiceCaller::SpeakText(const FString& Text)
+void AVoiceCaller::SpeakText(const FString& Text, const FString& FileName)
 {
     if (MaleVoiceInstance)
     {
         // Set the input for MaleVoice and trigger speech
-        MaleVoiceInstance->SetSpeech(Text); // Call SetSpeech with the text
+        MaleVoiceInstance->SetSpeech(Text, FileName); // Call SetSpeech with the text
     }
 }
